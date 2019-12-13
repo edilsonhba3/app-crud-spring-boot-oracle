@@ -34,6 +34,16 @@ public class UserServiceImpl implements UserService
 	@Override
 	public List<User> findAll() 
 	{
+		
+		List<User> lista = userRepository.findAllOrder();
+		lista.forEach(x -> {
+			System.out.println(x.getName());
+		});
+		List<User> lista2 = userRepository.findAll();
+		lista2.forEach(x -> {
+			System.out.println(x.getName());
+		});
+		
 		return userRepository.findAll();
 	}
 
@@ -52,6 +62,14 @@ public class UserServiceImpl implements UserService
 	@Override
 	public List<User> findAllOrder() 
 	{
+		List<User> lista = userRepository.findAllOrder();
+		lista.forEach(x -> {
+			System.out.println(x.getName());
+		});
+		List<User> lista2 = userRepository.findAll();
+		lista2.forEach(x -> {
+			System.out.println(x.getName());
+		});
 		return userRepository.findAllOrder();
 	}
 

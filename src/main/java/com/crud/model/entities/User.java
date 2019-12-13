@@ -1,14 +1,25 @@
 package com.crud.model.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 @Builder
@@ -46,6 +57,12 @@ public class User
     @Column(name = "active")
     private String active;
  
-    @Column(name = "country_pk")
-    private Integer countryPk;
+    //@Column(name = "country_pk")
+    //private Integer countryPk;
+    
+    @JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "pk_country", nullable = false)
+	private Country countryPk;
+	
 }

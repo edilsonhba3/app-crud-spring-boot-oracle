@@ -43,6 +43,7 @@
 					<div class="col-md-12">
 						<form th:action="@{/user/save}" th:object="${newUser}" method="post">
 							<div class="form-group">
+							<input th:field="*{pk}" type="hidden">
 								<label>Nombre</label> <input th:field="*{name}" type="text" class="form-control"
 									id="seeUserName" required="required">
 							</div>
