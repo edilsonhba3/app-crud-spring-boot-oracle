@@ -2,6 +2,7 @@ $(document).ready(function () {
 	console.log("app.js");
 	var baseUrl = "user";
 	var domainUrl = "/app-crud-spring-boot-oracle";
+	var POST = "POST";
 	
 	$(document).on("click", '.seeUser', function(){
 		//console.log("btnSee");
@@ -51,7 +52,7 @@ $(document).ready(function () {
 	function loadData(modal, id)
 	{
 		$.ajax({
-			type : "POST",
+			type : POST,
 	 		url  : baseUrl + "/findOne",	
 	 		data : ({id : id}),
 	 		success: function (data){
@@ -75,7 +76,7 @@ $(document).ready(function () {
 		var email     = $("#seeUserEmail").val();
 		
 		$.ajax({
-			type : "POST",
+			type : POST,
 	 		url  : baseUrl + "/update",	
 	 		data : ({id : id, firstname : firstname, lastname : lastname, email : email}),
 	 		success: function (data){
@@ -97,9 +98,9 @@ $(document).ready(function () {
 	
 	$('#btnRemoveConfirm').click(function(){
 		var id = $("#idDeleteUser").val();
-		$('#seeUserModal').modal('show');
+		// $('#seeUserModal').modal('show');
 		$.ajax({
-			type : "POST",
+			type : POST,
 	 		url  : baseUrl + "/remove",	
 	 		data : ({id : id}),
 	 		success: function (data){
@@ -111,4 +112,31 @@ $(document).ready(function () {
 	 		}
 		});
 	});
+	
+	$("#btnNewAjax").click(function(){
+		$('#newUserModal').modal('show');
+	});
+	
+	
+	$('#btnSaveNew').click(function() {	
+		var firstname = $("#userNameNew").val();
+		var lastname  = $("#userLastnameNew").val();
+		var email     = $("#userEmailNew").val();
+		var pass 	  = $("#userPassNew").val();
+		
+		$.ajax({
+			type : POST,
+	 		url  : baseUrl + "/saveAjax",	
+	 		data : ({firstname : firstname, lastname : lastname, email : email, pass : pass}),
+	 		success: function (data){
+	 			console.log(data);
+	 			$('#seeUserModalNew').modal('hide');	
+	 			window.location = domainUrl;
+	 		},
+	 		error: function (error){
+	 			console.log(error);
+	 		}
+		});
+	});
+	
 });

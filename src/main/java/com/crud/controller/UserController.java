@@ -2,6 +2,7 @@ package com.crud.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,25 +13,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.crud.model.entities.User;
+import com.crud.model.service.CountryService;
 import com.crud.model.service.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController 
 {
+	@Autowired
 	private UserService userService;
-	
-	public UserController(UserService userService)
-	{
-		this.userService = userService;
-	}
-	
+
+	@Autowired
+	private CountryService countryService;
+		
 	@GetMapping("/add")
     public ModelAndView add()
     {
         ModelAndView mav = new ModelAndView();        
         mav.setViewName("useradd");
         mav.addObject("newUser", new User());
+        mav.addObject("countries", countryService.findAllOrder());
         return mav;
     }
 	
@@ -86,5 +88,21 @@ public class UserController
         	result = Boolean.FALSE;	
         }
         return result;
+    }
+    
+    @PostMapping("/saveAjax")
+    @ResponseBody
+    public User saveAjax(@RequestParam String email,
+    					 @RequestParam String firstname,
+    					 @RequestParam String lastname,    					 
+    					 @RequestParam String pass)
+    {
+    	User user = new User();
+    	user.setEmail(email);
+    	user.setName(firstname);
+    	user.setLastName(lastname);
+    	user.setPassword(pass);
+    	user.setActive("1");
+        return userService.saveUser(user);
     }
 }

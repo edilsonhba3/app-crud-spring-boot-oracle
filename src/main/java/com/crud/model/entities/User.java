@@ -46,4 +46,6 @@ public class User
     @Column(name = "active")
     private String active;
  
+    @Column(name = "country_pk")
+    private Integer countryPk;
 }
